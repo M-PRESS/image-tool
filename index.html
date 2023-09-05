@@ -19,15 +19,29 @@
         }
 
         .container {
+            display: flex;
+            flex-direction: row; /* Display inputs and preview side by side */
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 24px;
-            width: 320px;
+            width: 720px; /* Increased width for two columns */
+        }
+
+        .inputs {
+            flex: 1; /* Take up 50% of the container */
+            padding-right: 30px; /* Add some spacing between columns */
+            border-right: 1px none #ccc; /* Add a border between columns */
+        }
+
+        .preview {
+            flex: 1; /* Take up 50% of the container */
+            padding-left: 20px; /* Add some spacing between columns */
         }
 
         h1 {
             font-size: 24px;
             margin-bottom: 16px;
+            margin-top: 10px;
             text-align: center;
         }
 
@@ -55,6 +69,7 @@
             background-position: right center;
             background-size: 24px 24px;
             cursor: pointer;
+            width: 100%;
         }
 
         /* Style the custom background URL input when shown */
@@ -83,44 +98,38 @@
             border: none;
             cursor: pointer;
             font-weight: bold;
-            width: 100%;
+            width: 96%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Image Tool</h1>
-        <label for="user1Avatar">1st Place Avatar</label>
-        <input type="url" id="user1Avatar" placeholder="User Avatar URL">
-        
-        <label for="user2Avatar">2nd Place Avatar</label>
-        <input type="url" id="user2Avatar" placeholder="User Avatar URL">
-        
-        <label for="user3Avatar">3rd Place Avatar</label>
-        <input type="url" id="user3Avatar" placeholder="User Avatar URL">
-        
-        <label for="background">Background</label>
-        <select id="backgroundDropdown">
-            <option value="grass1">🟩 Grass 1</option>
-            <option value="grass2">🟩 Grass 2</option>
-            <option value="custom">🔳 Custom</option>
-        </select>
+        <div class="inputs">
+            <h1>M-PRESS Image Tool</h1>
+            <label for="user1Avatar">1st Place Avatar</label>
+            <input type="url" id="user1Avatar" placeholder="User Avatar URL">
+            
+            <label for="user2Avatar">2nd Place Avatar</label>
+            <input type="url" id="user2Avatar" placeholder="User Avatar URL">
+            
+            <label for="user3Avatar">3rd Place Avatar</label>
+            <input type="url" id="user3Avatar" placeholder="User Avatar URL">
+            
+            <label for="background">Background</label>
+            <select id="backgroundDropdown">
+                <option value="grass1">🟩 Grass 1</option>
+                <option value="grass2">🟩 Grass 2</option>
+                <option value="custom">🔳 Custom</option>
+            </select>
 
-        <input type="url" id="backgroundUrl" placeholder="Background Image URL">
-        
+            <input type="url" id="backgroundUrl" placeholder="Background Image URL">
+        </div>
         <div class="preview">
             <h3>PREVIEW</h3>
             <canvas id="previewCanvas"></canvas>
             <button id="downloadButton">Download Image</button>
-            <p>This image is not upscaled</p>
         </div>
     </div>
-
-    <script>
-        // JavaScript code remains the same
-    </script>
-</body>
-</html>
 
     <script>
         const user1AvatarInput = document.getElementById('user1Avatar');
