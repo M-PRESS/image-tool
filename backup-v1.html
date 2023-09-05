@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Tool [M-PRESS]</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            font-family: 'Lexend Deca', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            width: 320px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="url"],
+        select {
+            font-family: 'Lexend Deca', sans-serif;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 16px;
+        }
+
+        /* Improve the styling for select dropdown */
+        select {
+            appearance: none;
+            padding-right: 30px; /* Add space for the arrow icon */
+            background-image: url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.17.0/icons/chevron-down.svg");
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: 24px 24px;
+            cursor: pointer;
+        }
+
+        /* Style the custom background URL input when shown */
+        #backgroundUrl {
+            display: none;
+        }
+
+        #backgroundDropdown[value="custom"] ~ #backgroundUrl {
+            display: block;
+        }
+
+        .preview {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Tool</h1>
+        <label for="user1Avatar">1st Place Avatar</label>
+        <input type="url" id="user1Avatar" placeholder="User Avatar URL">
+        
+        <label for="user2Avatar">2nd Place Avatar</label>
+        <input type="url" id="user2Avatar" placeholder="User Avatar URL">
+        
+        <label for="user3Avatar">3rd Place Avatar</label>
+        <input type="url" id="user3Avatar" placeholder="User Avatar URL">
+        
+        <label for="background">Background</label>
+        <select id="backgroundDropdown">
+            <option value="grass1">🟩 Grass 1</option>
+            <option value="grass2">🟩 Grass 2</option>
+            <option value="custom">🔳 Custom</option>
+        </select>
+
+        <input type="url" id="backgroundUrl" placeholder="Background Image URL">
+        
+        <div class="preview">
+            <h3>PREVIEW</h3>
+            <canvas id="previewCanvas"></canvas>
+            <button id="downloadButton">Download Image</button>
+            <p>This image is not upscaled</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code remains the same
+    </script>
+</body>
+</html>
+
+    <script>
+        const user1AvatarInput = document.getElementById('user1Avatar');
+        const user2AvatarInput = document.getElementById('user2Avatar');
+        const user3AvatarInput = document.getElementById('user3Avatar');
+        const backgroundDropdown = document.getElementById('backgroundDropdown');
+        const backgroundUrlInput = document.getElementById('backgroundUrl');
+        const previewCanvas = document.getElementById('previewCanvas');
+        const downloadButton = document.getElementById('downloadButton');
+
+        function generatePreview() {
+            const user1AvatarUrl = user1AvatarInput.value;
+            const user2AvatarUrl = user2AvatarInput.value;
+            const user3AvatarUrl = user3AvatarInput.value;
+            let backgroundImageUrl = '';
+
+            // Check the selected option in the dropdown
+            const selectedOption = backgroundDropdown.value;
+            switch (selectedOption) {
+                case 'grass1':
+                    backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896418.png';
+                    break;
+                case 'grass2':
+                    backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896539.png';
+                    break;
+                case 'custom':
+                    backgroundImageUrl = backgroundUrlInput.value;
+                    break;
+                default:
+                    break;
+            }
+
+            const canvas = previewCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = 320;
+            canvas.height = 320;
+
+            const backgroundImage = new Image();
+            backgroundImage.src = backgroundImageUrl;
+            backgroundImage.onload = () => {
+                ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+                const user1Avatar = new Image();
+                user1Avatar.src = user1AvatarUrl;
+                user1Avatar.onload = () => {
+                    // Position user1Avatar
+                    const x1 = 64; // Set the x-coordinate
+                    const y1 = 96; // Set the y-coordinate
+                    ctx.drawImage(user1Avatar, x1, y1);
+
+                    const user2Avatar = new Image();
+                    user2Avatar.src = user2AvatarUrl;
+                    user2Avatar.onload = () => {
+                        // Position user2Avatar
+                        const x2 = 128; // Adjust the positioning as needed
+                        const y2 = 96; // Set the y-coordinate
+                        ctx.drawImage(user2Avatar, x2, y2);
+
+                        const user3Avatar = new Image();
+                        user3Avatar.src = user3AvatarUrl;
+                        user3Avatar.onload = () => {
+                            // Position user3Avatar
+                            const x3 = 192; // Adjust the positioning as needed
+                            const y3 = 96; // Set the y-coordinate
+                            ctx.drawImage(user3Avatar, x3, y3);
+                        };
+                    };
+                };
+            };
+        }
+
+        function updatePreview() {
+            // Clear the canvas
+            const canvas = previewCanvas;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update the preview canvas
+            generatePreview();
+        }
+
+        // Event listener for background dropdown change
+        backgroundDropdown.addEventListener('change', () => {
+            // Show/hide custom background URL input based on selection
+            const selectedOption = backgroundDropdown.value;
+            if (selectedOption === 'custom') {
+                backgroundUrlInput.style.display = 'block';
+            } else {
+                backgroundUrlInput.style.display = 'none';
+            }
+
+            // Update the preview
+            updatePreview();
+        });
+
+        // Event listener for input changes
+        user1AvatarInput.addEventListener('input', updatePreview);
+        user2AvatarInput.addEventListener('input', updatePreview);
+        user3AvatarInput.addEventListener('input', updatePreview);
+        backgroundUrlInput.addEventListener('input', updatePreview);
+
+        // Initial preview generation
+        generatePreview();
+
+        // Event listener for download button click
+        downloadButton.addEventListener('click', () => {
+            const canvas = document.getElementById('previewCanvas');
+            const dataURL = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = dataURL;
+            a.download = 'social_media_image.png';
+            a.click();
+        });
+    </script>
+</body>
+</html>
