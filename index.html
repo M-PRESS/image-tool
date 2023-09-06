@@ -63,8 +63,8 @@
         /* Improve the styling for select dropdown */
         select {
             appearance: none;
-            padding-right: 30px; /* Add space for the arrow icon */
-            background-image: url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.17.0/icons/chevron-down.svg");
+            padding-right: 20px; /* Add space for the arrow icon */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Material Icon dropdown arrow */
             background-repeat: no-repeat;
             background-position: right center;
             background-size: 24px 24px;
@@ -162,6 +162,12 @@
                     break;
             }
 
+            // Modify the avatar URLs
+            const sizeParameter = '&size=m'; // The size parameter you want
+            const modifiedUser1AvatarUrl = user1AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+            const modifiedUser2AvatarUrl = user2AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+            const modifiedUser3AvatarUrl = user3AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+
             const canvas = previewCanvas;
             const ctx = canvas.getContext('2d');
             canvas.width = 320;
@@ -173,7 +179,7 @@
                 ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
                 const user1Avatar = new Image();
-                user1Avatar.src = user1AvatarUrl;
+                user1Avatar.src = modifiedUser1AvatarUrl; // Use the modified URL
                 user1Avatar.onload = () => {
                     // Position user1Avatar
                     const x1 = 64; // Set the x-coordinate
@@ -181,7 +187,7 @@
                     ctx.drawImage(user1Avatar, x1, y1);
 
                     const user2Avatar = new Image();
-                    user2Avatar.src = user2AvatarUrl;
+                    user2Avatar.src = modifiedUser2AvatarUrl; // Use the modified URL
                     user2Avatar.onload = () => {
                         // Position user2Avatar
                         const x2 = 128; // Adjust the positioning as needed
@@ -189,7 +195,7 @@
                         ctx.drawImage(user2Avatar, x2, y2);
 
                         const user3Avatar = new Image();
-                        user3Avatar.src = user3AvatarUrl;
+                        user3Avatar.src = modifiedUser3AvatarUrl; // Use the modified URL
                         user3Avatar.onload = () => {
                             // Position user3Avatar
                             const x3 = 192; // Adjust the positioning as needed
