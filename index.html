@@ -121,8 +121,10 @@
             
             <label for="background">Background</label>
             <select id="backgroundDropdown">
-                <option value="grass1">🟩 Grass 1</option>
-                <option value="grass2">🟩 Grass 2</option>
+                <option value="empty1">🔲 Default - Empty</option>
+                <option value="birthday">🟦 Birthday</option>
+                <option value="clouds">🟦 Clouds</option>
+                <option value="grass">🟩 Grass</option>
                 <option value="space1">⬛️ Space 1</option>
                 <option value="custom">🔳 Custom</option>
             </select>
@@ -153,11 +155,17 @@
     // Check the selected option in the dropdown
     const selectedOption = backgroundDropdown.value;
     switch (selectedOption) {
-        case 'grass1':
-            backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896418.png';
+        case 'empty1':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_empty.gif';
             break;
-        case 'grass2':
-            backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896539.png';
+        case 'birthday':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_bday.png';
+            break;
+        case 'clouds':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_clouds.gif';
+            break;
+        case 'grass':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_grass.gif';
             break;
         case 'space1':
             backgroundImageUrl = 'https://habbo-stories-content.s3.amazonaws.com/servercamera/purchased/hhus/p-30409004-1565961405276.png';
