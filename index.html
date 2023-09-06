@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Tool [M-PRESS]</title>
+    <title>3 Image Tool [M-PRESS]</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
@@ -243,11 +243,14 @@
         // Event listener for download button click
         downloadButton.addEventListener('click', () => {
             const canvas = document.getElementById('previewCanvas');
-            const dataURL = canvas.toDataURL('image/png');
-            const a = document.createElement('a');
-            a.href = dataURL;
-            a.download = 'social_media_image.png';
-            a.click();
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'social_media_image.png';
+                a.click();
+                URL.revokeObjectURL(url); // Clean up the URL to free resources
+            }, 'image/png');
         });
     </script>
 </body>
