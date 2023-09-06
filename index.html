@@ -122,10 +122,13 @@
             <label for="background">Background</label>
             <select id="backgroundDropdown">
                 <option value="empty1">🔲 Default - Empty</option>
+                <option disabled>─────────────</option>
+                <option value="abstract1">🟫 Abstract 1</option>
                 <option value="birthday">🟦 Birthday</option>
                 <option value="brick">🟥 Brick</option>
                 <option value="cheese">🟨 Cheese</option>
                 <option value="clouds">🟦 Clouds</option>
+                <option value="crosshatch">🟦 Crosshatch</option>
                 <option value="duck">🟨 Duck</option>
                 <option value="fishbones1">⬛️ Fish Bones 1</option>
                 <option value="fishbones2">🟧 Fish Bones 2</option>
@@ -133,15 +136,31 @@
                 <option value="floral2">🟦 Floral 2</option>
                 <option value="floral3">🟩 Floral 3</option>
                  <option value="gold">🟨 Gold</option>
-                <option value="grass">🟩 Grass</option>
+                <option value="grass">🟩 Grass 1</option>
                 <option value="lilypads">🟩 Lily Pads</option>
+                <option value="love">🟥 Love</option>
+                <option value="metal">⬛️ Metal</option>
                 <option value="pattern1">🟦 Pattern 1</option>
                 <option value="space1">⬛️ Space 1</option>
-                <option value="space1">🟨 Tiles 1</option>
+                <option value="streets1">🟥 Streets 1</option>
+                <option value="streets2">🟨 Streets 2</option>
+                <option value="streets3">🟩 Streets 3</option>
+                <option value="streets4">🟦 Streets 4</option>
+                <option value="streets5">🟦 Streets 5</option>
+                <option value="streets6">🟪 Streets 6</option>
+                <option value="stripes1">🟥 Stripes 1</option>
+                <option value="stripes2">🟦 Stripes 2</option>
+                <option value="tiles1">🟨 Tiles</option>
+                <option value="tile1">🟨 Tile 1</option>
                 <option value="val">🟥 Valentines</option>
+                <option value="vara1">🟫 Vara 1</option>
+                <option value="vara2">🟩 Vara 2</option>
+                <option value="vara3">🟥 Vara 3</option>
                 <option value="water">🟦 Water</option>
                 <option value="wooden">🟨 Wooden</option>
                 <option value="x">⬜️ eXpert</option>
+                <option disabled>More coming soon...</option>
+                <option disabled>─────────────</option>
                 <option value="custom">🔳 Custom</option>
             </select>
 
@@ -174,6 +193,9 @@
         case 'empty1':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_empty.gif';
             break;
+        case 'abstract1':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_abstract1.gif';
+            break;
         case 'birthday':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_bday.png';
             break;
@@ -185,6 +207,9 @@
             break;
         case 'clouds':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_clouds.gif';
+            break;
+        case 'crosshatch':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_crosshatch.gif';
             break;
         case 'duck':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/duck_back.gif';
@@ -213,17 +238,59 @@
         case 'lilypads':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_frog.gif';
             break;
+        case 'love':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_love.gif';
+            break;
+        case 'metal':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/metal.gif';
+            break;
         case 'pattern1':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_bulb.gif';
             break;
         case 'space1':
             backgroundImageUrl = 'https://habbo-stories-content.s3.amazonaws.com/servercamera/purchased/hhus/p-30409004-1565961405276.png';
             break;
+        case 'streets1':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_1.gif';
+            break;
+        case 'streets2':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_2.gif';
+            break;
+        case 'streets3':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_3.gif';
+            break;
+        case 'streets4':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_4.gif';
+            break;
+        case 'streets5':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_5.gif';
+            break;
+        case 'streets6':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_6.gif';
+            break;
+        case 'stripes1':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stripes.gif';
+            break;
+        case 'stripes2':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bgblue.gif';
+            break;
         case 'tiles1':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tiles.gif';
             break;
+        case 'tile1':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_ool.gif';
+            break;
         case 'val':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_val.gif';
+            break;
+        case 'vara1':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_1.gif';
+            break;
+        case 'vara2':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_2.gif';
+            break;
+        case 'vara3':
+            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_3.gif';
             break;
         case 'water':
             backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_water.gif';
