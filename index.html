@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 Image Tool [M-PRESS]</title>
+    <title>Image Tool [M-PRESS]</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
@@ -43,6 +43,10 @@
             margin-bottom: 16px;
             margin-top: 10px;
             text-align: center;
+        }
+
+        p {
+            font-size: 10px;
         }
 
         label {
@@ -106,152 +110,136 @@
     <div class="container">
         <div class="inputs">
             <h1>M-PRESS Image Tool</h1>
-            <label for="user1Avatar">1st Place Avatar</label>
-            <input type="url" id="user1Avatar" placeholder="User Avatar URL">
+            <label for="user1Avatar">1st Place</label>
+            <input type="url" id="user1Avatar" placeholder="🥇 Player Avatar URL">
             
-            <label for="user2Avatar">2nd Place Avatar</label>
-            <input type="url" id="user2Avatar" placeholder="User Avatar URL">
+            <label for="user2Avatar">2nd Place</label>
+            <input type="url" id="user2Avatar" placeholder="🥈 Player Avatar URL">
             
-            <label for="user3Avatar">3rd Place Avatar</label>
-            <input type="url" id="user3Avatar" placeholder="User Avatar URL">
+            <label for="user3Avatar">3rd Place</label>
+            <input type="url" id="user3Avatar" placeholder="🥉 Player Avatar URL">
             
             <label for="background">Background</label>
             <select id="backgroundDropdown">
                 <option value="grass1">🟩 Grass 1</option>
                 <option value="grass2">🟩 Grass 2</option>
+                <option value="space1">⬛️ Space 1</option>
                 <option value="custom">🔳 Custom</option>
             </select>
 
-            <input type="url" id="backgroundUrl" placeholder="Background Image URL">
+            <input type="url" id="backgroundUrl" placeholder="🖼 Background Image URL">
         </div>
         <div class="preview">
             <h3>PREVIEW</h3>
             <canvas id="previewCanvas"></canvas>
-            <button id="downloadButton">Download Image</button>
+            <p>Right click the image to save it or copy it to your clipboard.</p>
         </div>
     </div>
 
     <script>
-        const user1AvatarInput = document.getElementById('user1Avatar');
-        const user2AvatarInput = document.getElementById('user2Avatar');
-        const user3AvatarInput = document.getElementById('user3Avatar');
-        const backgroundDropdown = document.getElementById('backgroundDropdown');
-        const backgroundUrlInput = document.getElementById('backgroundUrl');
-        const previewCanvas = document.getElementById('previewCanvas');
-        const downloadButton = document.getElementById('downloadButton');
+    const user1AvatarInput = document.getElementById('user1Avatar');
+    const user2AvatarInput = document.getElementById('user2Avatar');
+    const user3AvatarInput = document.getElementById('user3Avatar');
+    const backgroundDropdown = document.getElementById('backgroundDropdown');
+    const backgroundUrlInput = document.getElementById('backgroundUrl');
+    const previewCanvas = document.getElementById('previewCanvas');
 
-        function generatePreview() {
-            const user1AvatarUrl = user1AvatarInput.value;
-            const user2AvatarUrl = user2AvatarInput.value;
-            const user3AvatarUrl = user3AvatarInput.value;
-            let backgroundImageUrl = '';
+    function generatePreview() {
+    const user1AvatarUrl = user1AvatarInput.value;
+    const user2AvatarUrl = user2AvatarInput.value;
+    const user3AvatarUrl = user3AvatarInput.value;
+    let backgroundImageUrl = '';
 
-            // Check the selected option in the dropdown
-            const selectedOption = backgroundDropdown.value;
-            switch (selectedOption) {
-                case 'grass1':
-                    backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896418.png';
-                    break;
-                case 'grass2':
-                    backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896539.png';
-                    break;
-                case 'custom':
-                    backgroundImageUrl = backgroundUrlInput.value;
-                    break;
-                default:
-                    break;
-            }
+    // Check the selected option in the dropdown
+    const selectedOption = backgroundDropdown.value;
+    switch (selectedOption) {
+        case 'grass1':
+            backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896418.png';
+            break;
+        case 'grass2':
+            backgroundImageUrl = 'https://mansionplay.com/ms-swf/camera/1098_1693896539.png';
+            break;
+        case 'space1':
+            backgroundImageUrl = 'https://habbo-stories-content.s3.amazonaws.com/servercamera/purchased/hhus/p-30409004-1565961405276.png';
+            break;
+        case 'custom':
+            backgroundImageUrl = backgroundUrlInput.value;
+            break;
+        default:
+            break;
+    }
 
-            // Modify the avatar URLs
-            const sizeParameter = '&size=m'; // The size parameter you want
-            const modifiedUser1AvatarUrl = user1AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
-            const modifiedUser2AvatarUrl = user2AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
-            const modifiedUser3AvatarUrl = user3AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+    // Modify the avatar URLs
+    const sizeParameter = '&size=m'; // The size parameter you want
+    const modifiedUser1AvatarUrl = user1AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+    const modifiedUser2AvatarUrl = user2AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+    const modifiedUser3AvatarUrl = user3AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
 
-            const canvas = previewCanvas;
-            const ctx = canvas.getContext('2d');
-            canvas.width = 320;
-            canvas.height = 320;
+    const canvas = previewCanvas;
+    const ctx = canvas.getContext('2d');
+    canvas.width = 320;
+    canvas.height = 320;
 
-            const backgroundImage = new Image();
-            backgroundImage.src = backgroundImageUrl;
-            backgroundImage.onload = () => {
-                ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    const backgroundImage = new Image();
+    backgroundImage.src = backgroundImageUrl;
+    backgroundImage.onload = () => {
+        const pattern = ctx.createPattern(backgroundImage, 'repeat');
+        ctx.fillStyle = pattern;
 
-                const user1Avatar = new Image();
-                user1Avatar.src = modifiedUser1AvatarUrl; // Use the modified URL
-                user1Avatar.onload = () => {
-                    // Position user1Avatar
-                    const x1 = 64; // Set the x-coordinate
-                    const y1 = 96; // Set the y-coordinate
-                    ctx.drawImage(user1Avatar, x1, y1);
+        // Draw the repeating background pattern
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.fill();
 
-                    const user2Avatar = new Image();
-                    user2Avatar.src = modifiedUser2AvatarUrl; // Use the modified URL
-                    user2Avatar.onload = () => {
-                        // Position user2Avatar
-                        const x2 = 128; // Adjust the positioning as needed
-                        const y2 = 96; // Set the y-coordinate
-                        ctx.drawImage(user2Avatar, x2, y2);
+        const user1Avatar = new Image();
+        user1Avatar.src = modifiedUser1AvatarUrl;
+        user1Avatar.onload = () => {
+            const x1 = 64;
+            const y1 = 96;
+            ctx.drawImage(user1Avatar, x1, y1);
 
-                        const user3Avatar = new Image();
-                        user3Avatar.src = modifiedUser3AvatarUrl; // Use the modified URL
-                        user3Avatar.onload = () => {
-                            // Position user3Avatar
-                            const x3 = 192; // Adjust the positioning as needed
-                            const y3 = 96; // Set the y-coordinate
-                            ctx.drawImage(user3Avatar, x3, y3);
-                        };
-                    };
+            const user2Avatar = new Image();
+            user2Avatar.src = modifiedUser2AvatarUrl;
+            user2Avatar.onload = () => {
+                const x2 = 128;
+                const y2 = 96;
+                ctx.drawImage(user2Avatar, x2, y2);
+
+                const user3Avatar = new Image();
+                user3Avatar.src = modifiedUser3AvatarUrl;
+                user3Avatar.onload = () => {
+                    const x3 = 192;
+                    const y3 = 96;
+                    ctx.drawImage(user3Avatar, x3, y3);
                 };
             };
-        }
+        };
+    };
+}
 
-        function updatePreview() {
-            // Clear the canvas
-            const canvas = previewCanvas;
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Update the preview canvas
-            generatePreview();
-        }
-
-        // Event listener for background dropdown change
-        backgroundDropdown.addEventListener('change', () => {
-            // Show/hide custom background URL input based on selection
-            const selectedOption = backgroundDropdown.value;
-            if (selectedOption === 'custom') {
-                backgroundUrlInput.style.display = 'block';
-            } else {
-                backgroundUrlInput.style.display = 'none';
-            }
-
-            // Update the preview
-            updatePreview();
-        });
-
-        // Event listener for input changes
-        user1AvatarInput.addEventListener('input', updatePreview);
-        user2AvatarInput.addEventListener('input', updatePreview);
-        user3AvatarInput.addEventListener('input', updatePreview);
-        backgroundUrlInput.addEventListener('input', updatePreview);
-
-        // Initial preview generation
+    function updatePreview() {
+        const canvas = previewCanvas;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         generatePreview();
+    }
 
-        // Event listener for download button click
-        downloadButton.addEventListener('click', () => {
-            const canvas = document.getElementById('previewCanvas');
-            canvas.toBlob((blob) => {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'social_media_image.png';
-                a.click();
-                URL.revokeObjectURL(url); // Clean up the URL to free resources
-            }, 'image/png');
-        });
-    </script>
+    backgroundDropdown.addEventListener('change', () => {
+        const selectedOption = backgroundDropdown.value;
+        if (selectedOption === 'custom') {
+            backgroundUrlInput.style.display = 'block';
+        } else {
+            backgroundUrlInput.style.display = 'none';
+        }
+        updatePreview();
+    });
+
+    user1AvatarInput.addEventListener('input', updatePreview);
+    user2AvatarInput.addEventListener('input', updatePreview);
+    user3AvatarInput.addEventListener('input', updatePreview);
+    backgroundUrlInput.addEventListener('input', updatePreview);
+
+    generatePreview();
+</script>
+
 </body>
 </html>
