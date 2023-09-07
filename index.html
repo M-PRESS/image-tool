@@ -64,7 +64,6 @@
             margin-bottom: 16px;
         }
 
-        /* Improve the styling for select dropdown */
         select {
             appearance: none;
             padding-right: 20px; /* Add space for the arrow icon */
@@ -76,7 +75,6 @@
             width: 100%;
         }
 
-        /* Style the custom background URL input when shown */
         #backgroundUrl {
             display: none;
         }
@@ -103,6 +101,38 @@
             cursor: pointer;
             font-weight: bold;
             width: 96%;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 0px;
+        }
+
+        .material-checkbox {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .material-checkbox + label::before {
+            content: '\e835';
+            font-family: 'Material Icons';
+            display: inline-block;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+            line-height: 1;
+            text-align: center;
+            margin-right: 8px;
+            vertical-align: middle;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .material-checkbox:checked + label::before {
+            content: '\e834';
+            color: #800006;
         }
     </style>
 </head>
@@ -144,7 +174,7 @@
                 <option value="floral1">🟧 Floral 1</option>
                 <option value="floral2">🟦 Floral 2</option>
                 <option value="floral3">🟩 Floral 3</option>
-                 <option value="gold">🟨 Gold</option>
+                <option value="gold">🟨 Gold</option>
                 <option value="grass">🟩 Grass 1</option>
                 <option value="info">⬛️ Info</option>
                 <option value="lace">⬜️ Lace</option>
@@ -192,6 +222,12 @@
             </select>
 
             <input type="url" id="backgroundUrl" placeholder="🖼 Background Image URL">
+            
+            <!-- Checkbox for enabling podium overlay -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="enablePodium" class="material-checkbox">
+                <label for="enablePodium">Enable Podium Overlay</label>
+            </div>
         </div>
         <div class="preview">
             <h3>PREVIEW</h3>
@@ -206,265 +242,301 @@
     const user3AvatarInput = document.getElementById('user3Avatar');
     const backgroundDropdown = document.getElementById('backgroundDropdown');
     const backgroundUrlInput = document.getElementById('backgroundUrl');
+    const enablePodiumCheckbox = document.getElementById('enablePodium');
     const previewCanvas = document.getElementById('previewCanvas');
 
     function generatePreview() {
-    const user1AvatarUrl = user1AvatarInput.value;
-    const user2AvatarUrl = user2AvatarInput.value;
-    const user3AvatarUrl = user3AvatarInput.value;
-    let backgroundImageUrl = '';
+        const user1AvatarUrl = user1AvatarInput.value;
+        const user2AvatarUrl = user2AvatarInput.value;
+        const user3AvatarUrl = user3AvatarInput.value;
+        let backgroundImageUrl = '';
 
-    // Check the selected option in the dropdown
-    const selectedOption = backgroundDropdown.value;
-    switch (selectedOption) {
-        case 'empty1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_empty.gif';
-            break;
-        case 'abstract1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_abstract1.gif';
-            break;
-        case 'abstract2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_abstract2.gif';
-            break;
-        case 'basketball':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/basket_ball.gif';
-            break;
-        case 'birthday':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_bday.png';
-            break;
-        case 'bobba1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bobba1.gif';
-            break;
-        case 'bobba2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bobba2.gif';
-            break;
-        case 'bonzai':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bonzai.gif';
-            break;
-        case 'brick':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_bricks.gif';
-            break;
-        case 'bunny':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_bunny.gif';
-            break;
-        case 'cheese':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/cheese.gif';
-            break;
-        case 'clouds':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_clouds.gif';
-            break;
-        case 'crosshatch':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_crosshatch.gif';
-            break;
-        case 'duck1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/duck_back.gif';
-            break;
-        case 'duck2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_duck.gif';
-            break;
-        case 'duck3':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_duckt.gif';
-            break;
-        case 'fishbones1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_fish.gif';
-            break;
-        case 'fishbones2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_fish.gif';
-            break;
-        case 'field':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/soccer.gif';
-            break;
-        case 'floral1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_floral_01.gif';
-            break;
-        case 'floral2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_floral_02.gif';
-            break;
-        case 'floral3':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_floral_03.gif';
-            break;
-        case 'gold':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/gold.gif';
-            break;
-        case 'grass':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_grass.gif';
-            break;
-        case 'info':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_info.gif';
-            break;
-        case 'lace':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/lace.gif';
-            break;
-        case 'lilypads':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_frog.gif';
-            break;
-        case 'love':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_love.gif';
-            break;
-        case 'loveduck':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_loveduckt.gif';
-            break;
-        case 'maze':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tema.png';
-            break;
-        case 'metal':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/metal.gif';
-            break;
-        case 'music':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/music.gif';
-            break;
-        case 'pattern1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_bulb.gif';
-            break;
-        case 'romantic':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/romantic.gif';
-            break;
-        case 'roses':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/roses.gif';
-            break;
-        case 'snow1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snow.1gif.gif';
-            break;
-        case 'snow2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snow2.gif';
-            break;
-        case 'snowflake1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snowflake1.gif';
-            break;
-        case 'snowflake2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snowflake2.gif';
-            break;
-        case 'space1':
-            backgroundImageUrl = 'https://habbo-stories-content.s3.amazonaws.com/servercamera/purchased/hhus/p-30409004-1565961405276.png';
-            break;
-        case 'stitched':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stitched.gif';
-            break;
-        case 'stone':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stone.gif';
-            break;
-        case 'streets1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_1.gif';
-            break;
-        case 'streets2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_2.gif';
-            break;
-        case 'streets3':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_3.gif';
-            break;
-        case 'streets4':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_4.gif';
-            break;
-        case 'streets5':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_5.gif';
-            break;
-        case 'streets6':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_6.gif';
-            break;
-        case 'stripes1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stripes.gif';
-            break;
-        case 'stripes2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg3.png';
-            break;
-        case 'stripes3':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/greenbg.gif';
-            break;
-        case 'stripes4':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bgblue.gif';
-            break;
-        case 'summer':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/beach.gif';
-            break;
-        case 'teal':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_teal.gif';
-            break;
-        case 'tiles1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_ool.gif';
-            break;
-        case 'tiles2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tiles.gif';
-            break;
-        case 'tiles3':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_ool2.gif';
-            break;
-        case 'tonga':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tonga.gif';
-            break;
-        case 'val':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_val.gif';
-            break;
-        case 'vara1':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_1.gif';
-            break;
-        case 'vara2':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_2.gif';
-            break;
-        case 'vara3':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_3.gif';
-            break;
-        case 'water':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_water.gif';
-            break;
-        case 'wooden':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_wooden.gif';
-            break;
-        case 'x':
-            backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_xer.gif';
-            break;
-        case 'custom':
-            backgroundImageUrl = backgroundUrlInput.value;
-            break;
-        default:
-            break;
-    }
+        // Check the selected option in the dropdown
+        const selectedOption = backgroundDropdown.value;
+        switch (selectedOption) {
+            case 'empty1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_empty.gif';
+                break;
+            case 'abstract1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_abstract1.gif';
+                break;
+            case 'abstract2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_abstract2.gif';
+                break;
+            case 'basketball':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/basket_ball.gif';
+                break;
+            case 'birthday':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_bday.png';
+                break;
+            case 'bobba1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bobba1.gif';
+                break;
+            case 'bobba2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bobba2.gif';
+                break;
+            case 'bonzai':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bonzai.gif';
+                break;
+            case 'brick':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_bricks.gif';
+                break;
+            case 'bunny':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_bunny.gif';
+                break;
+            case 'cheese':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/cheese.gif';
+                break;
+            case 'clouds':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_clouds.gif';
+                break;
+            case 'crosshatch':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_crosshatch.gif';
+                break;
+            case 'duck1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/duck_back.gif';
+                break;
+            case 'duck2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_duck.gif';
+                break;
+            case 'duck3':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_duckt.gif';
+                break;
+            case 'fishbones1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_fish.gif';
+                break;
+            case 'fishbones2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_fish.gif';
+                break;
+            case 'field':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/soccer.gif';
+                break;
+            case 'floral1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_floral_01.gif';
+                break;
+            case 'floral2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_floral_02.gif';
+                break;
+            case 'floral3':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_floral_03.gif';
+                break;
+            case 'gold':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/gold.gif';
+                break;
+            case 'grass':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_grass.gif';
+                break;
+            case 'info':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_info.gif';
+                break;
+            case 'lace':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/lace.gif';
+                break;
+            case 'lilypads':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_frog.gif';
+                break;
+            case 'love':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_love.gif';
+                break;
+            case 'loveduck':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_loveduckt.gif';
+                break;
+            case 'maze':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tema.png';
+                break;
+            case 'metal':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/metal.gif';
+                break;
+            case 'music':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/music.gif';
+                break;
+            case 'pattern1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_bulb.gif';
+                break;
+            case 'romantic':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/romantic.gif';
+                break;
+            case 'roses':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/roses.gif';
+                break;
+            case 'snow1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snow.1gif.gif';
+                break;
+            case 'snow2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snow2.gif';
+                break;
+            case 'snowflake1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snowflake1.gif';
+                break;
+            case 'snowflake2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_snowflake2.gif';
+                break;
+            case 'space1':
+                backgroundImageUrl = 'https://habbo-stories-content.s3.amazonaws.com/servercamera/purchased/hhus/p-30409004-1565961405276.png';
+                break;
+            case 'stitched':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stitched.gif';
+                break;
+            case 'stone':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stone.gif';
+                break;
+            case 'streets1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_1.gif';
+                break;
+            case 'streets2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_2.gif';
+                break;
+            case 'streets3':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_3.gif';
+                break;
+            case 'streets4':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_4.gif';
+                break;
+            case 'streets5':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_5.gif';
+                break;
+            case 'streets6':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/streets_6.gif';
+                break;
+            case 'stripes1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/stripes.gif';
+                break;
+            case 'stripes2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg3.png';
+                break;
+            case 'stripes3':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/greenbg.gif';
+                break;
+            case 'stripes4':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bgblue.gif';
+                break;
+            case 'summer':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/beach.gif';
+                break;
+            case 'teal':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_teal.gif';
+                break;
+            case 'tiles1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_ool.gif';
+                break;
+            case 'tiles2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tiles.gif';
+                break;
+            case 'tiles3':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_ool2.gif';
+                break;
+            case 'tonga':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_tonga.gif';
+                break;
+            case 'val':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_val.gif';
+                break;
+            case 'vara1':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_1.gif';
+                break;
+            case 'vara2':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_2.gif';
+                break;
+            case 'vara3':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/vara_3.gif';
+                break;
+            case 'water':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_water.gif';
+                break;
+            case 'wooden':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_wooden.gif';
+                break;
+            case 'x':
+                backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_xer.gif';
+                break;
+            case 'custom':
+                backgroundImageUrl = backgroundUrlInput.value;
+                break;
+            default:
+                break;
+        }
 
-    // Modify the avatar URLs
-    const sizeParameter = '&size=m'; // The size parameter you want
-    const modifiedUser1AvatarUrl = user1AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
-    const modifiedUser2AvatarUrl = user2AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
-    const modifiedUser3AvatarUrl = user3AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+        // Modify the avatar URLs
+        const sizeParameter = '&size=m'; // The size parameter you want
+        const modifiedUser1AvatarUrl = user1AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+        const modifiedUser2AvatarUrl = user2AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
+        const modifiedUser3AvatarUrl = user3AvatarUrl.replace(/&size=[^&]*/g, sizeParameter);
 
-    const canvas = previewCanvas;
-    const ctx = canvas.getContext('2d');
-    canvas.width = 320;
-    canvas.height = 320;
+        const canvas = previewCanvas;
+        const ctx = canvas.getContext('2d');
+        canvas.width = 320;
+        canvas.height = 320;
 
-    const backgroundImage = new Image();
-    backgroundImage.src = backgroundImageUrl;
-    backgroundImage.onload = () => {
-        const pattern = ctx.createPattern(backgroundImage, 'repeat');
-        ctx.fillStyle = pattern;
+        const backgroundImage = new Image();
+        backgroundImage.src = backgroundImageUrl;
+        backgroundImage.onload = () => {
+            const pattern = ctx.createPattern(backgroundImage, 'repeat');
+            ctx.fillStyle = pattern;
 
-        // Draw the repeating background pattern
-        ctx.rect(0, 0, canvas.width, canvas.height);
-        ctx.fill();
+            // Draw the repeating background pattern
+            ctx.rect(0, 0, canvas.width, canvas.height);
+            ctx.fill();
 
-        const user1Avatar = new Image();
-        user1Avatar.src = modifiedUser1AvatarUrl;
-        user1Avatar.onload = () => {
-            const x1 = 64;
-            const y1 = 96;
-            ctx.drawImage(user1Avatar, x1, y1);
+            if (enablePodiumCheckbox.checked) {
+                const podiumOverlay = new Image();
+                podiumOverlay.src = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/podium_overlay.png';
+                podiumOverlay.onload = () => {
+                    ctx.drawImage(podiumOverlay, 0, 0, canvas.width, canvas.height);
+                };
+            }
 
-            const user2Avatar = new Image();
-            user2Avatar.src = modifiedUser2AvatarUrl;
-            user2Avatar.onload = () => {
-                const x2 = 128;
-                const y2 = 96;
-                ctx.drawImage(user2Avatar, x2, y2);
+            const user1Avatar = new Image();
+            user1Avatar.src = modifiedUser1AvatarUrl;
+            user1Avatar.onload = () => {
+                let x1, y1;
 
-                const user3Avatar = new Image();
-                user3Avatar.src = modifiedUser3AvatarUrl;
-                user3Avatar.onload = () => {
-                    const x3 = 192;
-                    const y3 = 96;
-                    ctx.drawImage(user3Avatar, x3, y3);
+                // Check if the podium overlay checkbox is checked
+                if (enablePodiumCheckbox.checked) {
+                    x1 = 128;
+                    y1 = 70;
+                } else {
+                    x1 = 64;
+                    y1 = 96;
+                }
+
+                ctx.drawImage(user1Avatar, x1, y1);
+
+                const user2Avatar = new Image();
+                user2Avatar.src = modifiedUser2AvatarUrl;
+                user2Avatar.onload = () => {
+                    let x2, y2;
+
+                    // Check if the podium overlay checkbox is checked
+                    if (enablePodiumCheckbox.checked) {
+                        x2 = 94;
+                        y2 = 99;
+                    } else {
+                        x2 = 128;
+                        y2 = 96;
+                    }
+
+                    ctx.drawImage(user2Avatar, x2, y2);
+
+                    const user3Avatar = new Image();
+                    user3Avatar.src = modifiedUser3AvatarUrl;
+                    user3Avatar.onload = () => {
+                        let x3, y3;
+
+                        // Check if the podium overlay checkbox is checked
+                        if (enablePodiumCheckbox.checked) {
+                            x3 = 162;
+                            y3 = 110;
+                        } else {
+                            x3 = 192;
+                            y3 = 96;
+                        }
+
+                        ctx.drawImage(user3Avatar, x3, y3);
+                    };
                 };
             };
         };
-    };
-}
+    }
 
     function updatePreview() {
         const canvas = previewCanvas;
@@ -487,9 +559,9 @@
     user2AvatarInput.addEventListener('input', updatePreview);
     user3AvatarInput.addEventListener('input', updatePreview);
     backgroundUrlInput.addEventListener('input', updatePreview);
+    enablePodiumCheckbox.addEventListener('change', updatePreview);
 
     generatePreview();
 </script>
-
 </body>
 </html>
