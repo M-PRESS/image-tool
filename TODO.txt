@@ -1,4 +1,5 @@
 - Add Remaining Backgrounds
+- Auto-Rotate Avatar to correct direction, accounting for with podium or without
 - Podium Chooser
 - Header Chooser
 - Download Button with Instant Upscale
