@@ -315,8 +315,9 @@
                 <option disabled>X</option>
                 <option value="x">⬜️ eXpert</option>
                 <option value="xmasstarsky">🟦 X-mas Star Sky</option>
-                <option disabled>〰〰〰〰〰〰〰〰〰〰</option>
+                <option disabled>•••</option>
                 <option value="custom">🔳 Custom Background</option>
+                <option value="transparent">🔳 None</option>
             </select>
 
             <input type="url" id="backgroundUrl" placeholder="🖼 Background Image URL">
@@ -386,6 +387,9 @@
             switch (selectedOption) {
                 case 'empty1':
                     backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_empty.gif';
+                    break;
+                case 'transparent':
+                    backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/transparent.png';
                     break;
                 case 'abstract1':
                     backgroundImageUrl = 'https://raw.githubusercontent.com/M-PRESS/image-tool/main/images/bg_pattern_abstract1.gif';
